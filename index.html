@@ -1,0 +1,72 @@
+<script>
+
+const personSchema = {
+	name: 'string',
+	age: 'number',
+	siblings: 'array',
+	metaData: 'object',
+	active: 'boolean'
+};
+
+const personObject = {
+	name: 'James',
+	age: 23,
+	siblings: ['Johnnathan'],
+	metaData: {},
+	active: true
+}
+
+function showScheme() {
+	document.getElementById("jsonScheme").innerHTML = JSON.stringify(personSchema);
+	document.getElementById("jsonObject").innerHTML = JSON.stringify(personObject);
+}
+
+function validateObject() {
+	var output = [];
+	var result = true;
+
+	for (var key in personObject) {
+		if(personSchema[key] === "array") {
+			output.push(Array.isArray(personObject[key]));
+		} else {
+			output.push(typeof personObject[key] === personSchema[key]);
+		}
+	}
+
+	if (output.indexOf(false) > -1) {
+		result = false;
+	}
+		
+	document.getElementById("validationOutput").innerHTML = result;
+	
+}
+
+</script>
+
+<body onload="showScheme()">
+	<table>
+		<tr>
+			<td>Schema:</td>
+			<td>Object:</td>
+		</tr>
+		<tr>
+			<td>
+				<span id="jsonScheme"><code>Schema</code></span>
+			</td>
+			<td>
+				<span id="jsonObject"><code>Object</code></span>
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2>
+				<button type="button" onclick="validateObject()">Validate!</button>
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2>
+				Is object valid? <br>
+				<span id="validationOutput"></span>
+			</td>
+		</tr>
+	</table>
+</body>
